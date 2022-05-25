@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="BeDesigner.Controls.RunCanvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BeDesigner.Controls" xmlns:converter="clr-namespace:BeDesigner.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:ZoomConverter x:Key="ZoomX" IsHeight="False"/>
+        <converter:ZoomConverter x:Key="ZoomY" IsHeight="True"/>
+    </UserControl.Resources>
+    <Grid  ClipToBounds="True">
+        <Canvas x:Name="RootCanvas" ClipToBounds="True" Background="Transparent" MouseLeftButtonUp="RootCanvas_MouseLeftButtonUp" 
+                MouseMove="RootCanvas_MouseMove" MouseLeftButtonDown="RootCanvas_MouseLeftButtoDown" MouseWheel="RootCanvas_MouseWheel">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="Scale"/>
+                    <TranslateTransform x:Name="Translate"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+        </Canvas>
+
+        <Grid VerticalAlignment="Bottom" Background="#4B959595">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="8 0">
+                <CheckBox x:Name="DragEnable" Content="拖动" Margin="4"/>
+                <CheckBox x:Name="ZoomEnable" Content="缩放" Margin="4"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

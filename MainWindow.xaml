@@ -1,0 +1,218 @@
+﻿<dx:ThemedWindow
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BeDesigner"
+        xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+        x:Class="BeDesigner.MainWindow"
+        mc:Ignorable="d"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:avae="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:vm="clr-namespace:BeDesigner.ViewModels"
+        Title="组态工具" Height="900" Width="1400" 
+        xmlns:ctl="clr-namespace:BeDesigner.Controls"
+        WindowStartupLocation="CenterScreen" dx:ThemeManager.ThemeName="VS2019Light" Loaded="{DXEvent Handler='Loaded(@e(cav))'}" 
+    DataContext="{dxmvvm:ViewModelSource Type=vm:MainViewModel}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderThickness="1" BorderBrush="{StaticResource AccentBrush}" Margin="4">
+            <ListBox x:Name="CtlList" Background="Transparent" ItemTemplate="{StaticResource ToolBoxStyle}" BorderThickness="0" PreviewMouseMove="CtlList_PreviewMouseMove">
+            </ListBox>
+        </Border>
+
+        <DockPanel Grid.Column="1">
+            <DockPanel LastChildFill="False" DockPanel.Dock="Top" Height="24" Margin="4 4 4 0">
+                <Button Margin="0" Width="24" Padding="0" Click="AglinLeftBtn_Click" ToolTip="左对齐">
+                    <icon:PackIconModern Kind="AlignLeft"/>
+                </Button>
+                <Button Margin="4 0 0 0" Width="24" Padding="0" Click="AglinRightBtn_Click" ToolTip="右对齐">
+                    <icon:PackIconModern Kind="AlignRight"/>
+                </Button>
+                <Button Margin="4 0 0 0" Width="24" Padding="0" Click="AglinCenterBtn_Click" ToolTip="中心对齐">
+                    <icon:PackIconModern Kind="AlignCenter"/>
+                </Button>
+                <Button Margin="4 0 0 0" Width="24" Padding="0" Click="AglinTopBtn_Click" ToolTip="上对齐">
+                    <icon:PackIconModern Kind="BorderTop"/>
+                </Button>
+                <Button Margin="4 0 0 0" Width="24" Padding="0" Click="AglinBottomBtn_Click" ToolTip="下对齐">
+                    <icon:PackIconModern Kind="BorderBottom"/>
+                </Button>
+
+                <Button Margin="16 0 0 0" Width="24" Padding="0" Click="HorizontalLayoutBtn_Click" ToolTip="水平分布">
+                    <icon:PackIconModern Kind="BorderHorizontal"/>
+                </Button>
+                <Button Margin="4 0 0 0" Width="24" Padding="0" Click="VerticalLayoutBtn_Click" ToolTip="垂直分布">
+                    <icon:PackIconModern Kind="BorderVertical"/>
+                </Button>
+
+                <ToggleButton IsChecked="{Binding UseAutoAlignment, ElementName=cav, Mode=TwoWay}" ToolTip="使用对齐网格" Margin="4 0 0 0" Width="24" Padding="0">
+                    <icon:PackIconModern Kind="CellAlign"/>
+                </ToggleButton>
+
+                <Button Margin="16 0 0 0" Width="24" Padding="0" ToolTip="复制" Command="{Binding ElementName=cav, Path=CopySelectItemsCommand}">
+                    <icon:PackIconModern Kind="PageCopy"/>
+                </Button>
+                <Button Margin="4 0 0 0" Width="24" Padding="0" ToolTip="粘贴"  Command="{Binding ElementName=cav, Path=PasteSelectItemsCommand}">
+                    <icon:PackIconModern Kind="ClipboardPaste"/>
+                </Button>
+                <Button Margin="4 0 0 0" Width="24" Padding="0" ToolTip="删除"  Command="{Binding ElementName=cav, Path=DeleteSelectItemsCommand}">
+                    <icon:PackIconModern Kind="Delete"/>
+                </Button>
+
+                <Button x:Name="RunBtn" Margin="16 0 0 0" Padding="0" Click="RunBtn_Click" Command="{Binding RunUiCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Tag" Value="运行"/>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <StackPanel Orientation="Horizontal" Margin="8 0">
+                                        <icon:PackIconModern Kind="ControlPlay" VerticalAlignment="Center" Foreground="#28B60F" Width="8"/>
+                                        <TextBlock Text="运行" Margin="4 0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                    <Setter Property="Tag" Value="停止"/>
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <StackPanel Orientation="Horizontal" Margin="8 0">
+                                                <icon:PackIconModern Kind="ControlStop" VerticalAlignment="Center" Foreground="#B60F0F" Width="8"/>
+                                                <TextBlock Text="停止" Margin="4 0" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                </Button>
+
+                <Button x:Name="SaveBtn" Margin="16 0 0 0" Padding="0" Click="SaveBtn_Click">
+                    <StackPanel Orientation="Horizontal" Margin="8 0">
+                        <icon:PackIconModern Kind="Save" VerticalAlignment="Center" Width="12"/>
+                        <TextBlock Text="保存" Margin="4 0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="LoadBtn" Margin="4 0 0 0" Padding="0" Click="LoadBtn_Click">
+                    <StackPanel Orientation="Horizontal" Margin="8 0">
+                        <icon:PackIconModern Kind="DiskDownload" VerticalAlignment="Center" Width="14"/>
+                        <TextBlock Text="加载" Margin="4 0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <ToggleButton x:Name="showCode" Checked="{DXEvent 'ShowCode(@e(codeEditor))'}" DockPanel.Dock="Right" Margin="4 0 0 0" Padding="4 0">
+                    <icon:Material Kind="FileCode"/>
+                </ToggleButton>
+
+                <dxe:SpinEdit DockPanel.Dock="Right" Width="40" MaxValue="16" MinValue="1" Margin="4 0 0 0" Mask="d" 
+                              HorizontalContentAlignment="Center" Text="{Binding ElementName=cav,Path=GridPxiel}" MaskType="Numeric"/>
+                <TextBlock DockPanel.Dock="Right" Text="对齐:" VerticalAlignment="Center" Margin="16 0 0 0"/>
+
+            </DockPanel>
+
+
+            <Border BorderThickness="1" BorderBrush="{StaticResource AccentBrush}" Margin="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <local:CanvasPanel x:Name="cav" Visibility="{DXBinding '!IsRunning',Converter={dx:BooleanToVisibilityConverter}}" AllowDrop="True" RenderTransformOrigin="0.5,0.5" ClipToBounds="True" UseLayoutRounding="True" Focusable="True" SnapsToDevicePixels="True">
+                        <local:CanvasPanel.Background>
+                            <VisualBrush TileMode="Tile"  Viewport="0,0,20,20" ViewportUnits="Absolute">
+                                <VisualBrush.Visual>
+                                    <Rectangle Width="20" Height="20" StrokeDashArray="4,2" StrokeThickness="0.5" Stroke="#CBCBCB">
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding UseAutoAlignment, RelativeSource={RelativeSource AncestorType={x:Type local:CanvasPanel}, Mode=FindAncestor}}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding UseAutoAlignment, RelativeSource={RelativeSource AncestorType={x:Type local:CanvasPanel}, Mode=FindAncestor}}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </local:CanvasPanel.Background>
+                        <local:CanvasPanel.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform x:Name="CanvasTranslate"/>
+                            </TransformGroup>
+                        </local:CanvasPanel.RenderTransform>
+                    </local:CanvasPanel>
+
+                    <ctl:RunCanvas x:Name="runCanvas" Visibility="{Binding IsRunning,Converter={dx:BooleanToVisibilityConverter}}" />
+
+                    <avae:TextEditor x:Name="codeEditor" ShowLineNumbers="True" Padding="4" WordWrap="True" IsReadOnly="True" SyntaxHighlighting="XML" BorderThickness="1 0 0 0" BorderBrush="{StaticResource ControlBorderBrush}" Grid.Column="1" Width="480" Visibility="{Binding ElementName=showCode, Path=IsChecked, Converter={dx:BooleanToVisibilityConverter}}"/>
+                </Grid>
+            </Border>
+        </DockPanel>
+
+        <GridSplitter HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Stretch" Width="5" Background="Transparent"/>
+        <Grid Grid.Column="2">
+            <dxprg:PropertyGridControl SelectedObjects="{Binding SelectedItems, ElementName=cav}" Margin="4" 
+                                       ShowProperties="WithPropertyDefinitions" ShowCategories="True"
+                                       ExpandCategoriesWhenSelectedObjectChanged="True"
+                                       ShowDescriptionIn="Panel"
+                                       Background="Transparent"
+                                       BorderBrush="{StaticResource AccentBrush}"
+                                       ShowToolPanel="False" SortMode="Definitions">
+                <dxprg:PropertyGridControl.PropertyDefinitions>
+                    <dxprg:PropertyDefinition Header="名称" Path="Name" Description="设置控件的标识,可以在Js脚本中通过标识操作控件。"/>
+                    <dxprg:PropertyDefinition Header="内容" Path="Content"/>
+                    <dxprg:PropertyDefinition Header="标题" Path="Header" Description="Header"/>
+                    <dxprg:PropertyDefinition Header="文本" Path="Text" Description="Text"/>
+                    <dxprg:PropertyDefinition Header="值" Path="NumberValue" Description="NumberValue"/>
+                    <dxprg:PropertyDefinition Header="数值" Path="CurValue" Description="CurValue"/>
+                    <dxprg:PropertyDefinition Header="状态值" Path="StatusValue" Description="StatusValue"/>
+                    <dxprg:PropertyDefinition Header="勾选状态" Path="IsChecked" Description="IsChecked"/>
+                    <dxprg:PropertyDefinition Header="数值" Path="Value" Description="Value"/>
+                    <dxprg:PropertyDefinition Header="最大值" Path="MaxValue" Description="MaxValue"/>
+                    <dxprg:PropertyDefinition Header="最小值" Path="MinValue" Description="MinValue"/>
+                    <dxprg:PropertyDefinition Header="最大值" Path="Maximum" Description="Maximum"/>
+                    <dxprg:PropertyDefinition Header="最小值" Path="Minimum" Description="Minimum"/>
+                    <dxprg:PropertyDefinition Header="间隔" Path="Interval"/>
+                    <dxprg:PropertyDefinition Header="宽度" Path="Width"/>
+                    <dxprg:PropertyDefinition Header="高度" Path="Height"/>
+                    <dxprg:PropertyDefinition Header="列表项" Path="ItemsString" ContentTemplate="{StaticResource ListEditTemplate}"/>
+                    <dxprg:PropertyDefinition Header="前景色" Path="Foreground"/>
+                    <dxprg:PropertyDefinition Header="背景色" Path="Background"/>
+                    <dxprg:PropertyDefinition Header="路径" Path="Source" ContentTemplate="{StaticResource ImagePathEditTemplate}"/>
+                    <dxprg:PropertyDefinition Header="字体" Path="FontFamily"/>
+                    <dxprg:PropertyDefinition Header="字体大小" Path="FontSize"/>
+                    <dxprg:PropertyDefinition Header="字体样式" Path="FontWeight"/>
+                    <dxprg:PropertyDefinition Header="垂直对齐" Path="VerticalContentAlignment"/>
+                    <dxprg:PropertyDefinition Header="水平对齐" Path="HorizontalContentAlignment"/>
+                    <dxprg:PropertyDefinition Header="所属分组" Path="GroupName"/>
+                    <dxprg:PropertyDefinition Header="填充" Path="WaveFill"/>
+                    <dxprg:PropertyDefinition Header="边框粗细" Path="WaveThickness"/>
+                    <dxprg:PropertyDefinition Header="边框" Path="WaveStroke"/>
+
+                    <dxprg:PropertyDefinition Header="左边距" Path="(Canvas.Left)"/>
+                    <dxprg:PropertyDefinition Header="上边距" Path="(Canvas.Top)"/>
+
+                    <dxprg:PropertyDefinition Header="点击事件" Path="ClickExec" ContentTemplate="{StaticResource EventEditTemplate}"/>
+                    <dxprg:PropertyDefinition Header="值改变事件" Path="ValueChangedExecute" ContentTemplate="{StaticResource EventEditTemplate}"/>
+                    <dxprg:PropertyDefinition Header="定时触发" Path="TikcExecute" ContentTemplate="{StaticResource EventEditTemplate}"/>
+                    <dxprg:PropertyDefinition Header="勾选事件" Path="CheckedExec" ContentTemplate="{StaticResource EventEditTemplate}"/>
+                    <dxprg:PropertyDefinition Header="取消勾选事件" Path="UnCheckedExec" ContentTemplate="{StaticResource EventEditTemplate}"/>
+                </dxprg:PropertyGridControl.PropertyDefinitions>
+            </dxprg:PropertyGridControl>
+        </Grid>
+    </Grid>
+</dx:ThemedWindow>

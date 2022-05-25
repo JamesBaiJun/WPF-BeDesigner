@@ -1,0 +1,43 @@
+﻿<dx:ThemedWindow
+    x:Class="BeDesigner.Views.JsEditWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    Title="编辑脚本" Height="600" Width="920" 
+    xmlns:avae="http://icsharpcode.net/sharpdevelop/avalonedit"
+    WindowStartupLocation="CenterOwner" ShowIcon="False"  dx:ThemeManager.ThemeName="VS2019Light">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <TabControl  Margin="4">
+                <TabItem Header="属性">
+                    <TreeView x:Name="Tree" Margin="-12" AllowDrop="False" MouseMove="Tree_MouseMove">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Path=Properties}">
+                                <TextBlock Text="{Binding Name}"/>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </TabItem>
+            </TabControl>
+
+
+            <avae:TextEditor AllowDrop="True" Margin="4" Drop="txtBox_Drop" BorderThickness="1" BorderBrush="LightGray" x:Name="txtBox" DragOver="txtBox_DragOver" Grid.Column="1" Padding="4" HorizontalScrollBarVisibility="Disabled" 
+                         SyntaxHighlighting="JavaScript" ShowLineNumbers="True" FontSize="16" FontFamily="Consolas"/>
+        </Grid>
+
+        <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Width="80" Height="30" Content="取消" x:Name="CancelBtn" Click="CancelBtn_Click" IsCancel="True"/>
+            <Button Width="80" Height="30" Content="确认" x:Name="ConfirmBtn" Margin="8 0 4 0" Click="ConfirmBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</dx:ThemedWindow>

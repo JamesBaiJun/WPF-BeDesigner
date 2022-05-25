@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="BeDesigner.CustomerControls.GraphArrow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BeDesigner.CustomerControls"
+             mc:Ignorable="d" 
+             x:Name="root"
+             d:DesignHeight="44" d:DesignWidth="60" Foreground="#22DCF7">
+    <Grid>
+        <Path Data="M571.5,161.75L629,161.75 629,147.5 657.5,176 629,204.5 629,190.25 571.5,190.25z" 
+              Stretch="Fill" Fill="{Binding ElementName=root,Path=Foreground}"/>
+    </Grid>
+</UserControl>
