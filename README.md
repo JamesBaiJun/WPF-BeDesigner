@@ -8,3 +8,9 @@
 * 从左侧控件库拖动至编辑区域
 * 按住鼠标左键拖动控件
 * 按住鼠标中键并移动，对控件进行缩放
+### 相关文章
+CSDN https://blog.csdn.net/weixin_42850577/article/details/123093252
+### 支持我
+* 如果项目对你有所帮助，请我喝杯冰阔落吧！
+<img src="Images/zfb.jpg" width="200" alt="抖音小程序"/>
+<img src="Images/wx.jpg" width="200"  alt="抖音小程序"/>
