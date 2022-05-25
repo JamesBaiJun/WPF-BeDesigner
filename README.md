@@ -8,8 +8,10 @@
 * 从左侧控件库拖动至编辑区域
 * 按住鼠标左键拖动控件
 * 按住鼠标中键并移动，对控件进行缩放
-### 相关文章
+### 相关文章及动态图
 CSDN https://blog.csdn.net/weixin_42850577/article/details/123093252
+<img src="https://img-blog.csdnimg.cn/3cd8ff09b1b94e3e881b7378467f7be6.gif" width="800" alt="zfb"/>
+
 ### 支持我
 * 如果项目对你有所帮助，请我喝杯冰阔落吧！
 <img src="Images/zfb.jpg" width="200" alt="zfb"/>
